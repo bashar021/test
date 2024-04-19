@@ -1,0 +1,147 @@
+#work_order_top_bar{
+    display: flex;
+    justify-content: space-between;
+    /* background-color: black; */
+    align-items: center;
+    padding: 1%;
+    padding-left: 5%;
+    /* margin-bottom: 5%; */
+    padding-right: 3%;
+}
+#work_order_top_bar button{
+    width: 150px;
+    background-color: #007bff; /* Primary color */
+    color: #fff; /* Text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.4); /* Shadow effect */
+    transition: box-shadow 0.3s ease; /* Smooth transition for the shadow effect */
+}
+
+#work_order_top_bar button:hover {
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4); /* Shadow effect on hover */
+}
+#tab_option_box{
+    display: flex;
+    
+}
+
+
+.tab-buttons {
+    display: flex;
+}
+
+.tab-buttons {
+    display: flex;
+}
+
+.tab-button {
+    border: none;
+    background-color:transparent;
+    color: #000; /* Black text color */
+    font-size: 20px;
+    /* margin-right: 20px; */
+    cursor: pointer;
+    position: relative;
+    border-bottom-style: solid;
+    border-color: rgb(206, 204, 204);
+    width: 300px;
+    margin-bottom: 2%;
+}
+
+.active_tab_button{
+    border-color: black;
+}
+
+/* 
+table{
+    width: 98%;
+    padding: 5%;
+    background-color: aqua;
+    margin: auto;
+}
+.parent_row td{
+    margin-left: 100px;
+    background-color: blue;
+   
+}
+.child_row td {
+   
+    background-color: red;
+    width: 1%;
+}
+
+#overview_column_head{
+
+} */
+
+
+
+
+/* Style for the table */
+table {
+    border-collapse: collapse;
+    /* margin-top: 5%; */
+    /* padding-top: 5%; */
+    /* border-collapse: collapse; */
+    width: 90%;
+    /* border-style: none; */
+    /* border: none; */
+    margin: auto;
+
+}
+/* Style for table headers */
+th {
+    background-color: #f2f2f2;
+    /* border: 1px solid #dddddd; */
+    padding: 8px;
+    text-align: left;
+}
+  
+tr:first-child td, tr:first-child th {
+    border-right: none; /* Remove the right border from cells in the first row */
+  }
+/* Style for table rows */
+tr.parent_row,
+tr.child_row,
+tr.grandchild_row {
+    /* border: 1px solid #dddddd; */
+}
+
+/* Style for table data cells */
+td {
+    /* border: 1px solid #dddddd; */
+    padding: 8px;
+}
+.parent_row td button{
+    border-style: none;
+    background-color: transparent;
+}
+.child_row td button{
+    border-style: none;
+    background-color: transparent;
+}
+
+/* Style for checkboxes */
+input[type="checkbox"] {
+    margin-right: 5px; /* Adjust the distance between the checkbox and the next column */
+}
+
+/* Style for package name */
+td:nth-child(2) label {
+    display: inline-block;
+    margin-left: 5px; /* Adjust the distance between the checkbox and the package name */
+}
+
+/* Style for child checkboxes */
+.child_row input[type="checkbox"] {
+    margin-left: 50px; /* Adjust the distance between the child checkbox and the parent checkbox */
+}
+
+/* Style for grandchild checkboxes */
+.grandchild_row input[type="checkbox"] {
+    margin-left: 100px; /* Adjust the distance between the grandchild checkbox and the parent checkbox */
+}
+
+
