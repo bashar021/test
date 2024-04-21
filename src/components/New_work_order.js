@@ -116,11 +116,11 @@ export default function New_work_order() {
                             onChange={() => {
                                 const updatedParentsArray = [...parentsArray];
                                 updatedParentsArray.forEach(parent => {
-                                    parent.isChecked = true; // Check the parent
+                                    parent.isChecked = !parent.isChecked; // Toggle the parent's status
                                     parent.children.forEach(child => {
-                                        child.isChecked = true; // Check the child
+                                        child.isChecked = !child.isChecked; // Toggle the child's status
                                         child.children.forEach(grandchild => {
-                                            grandchild.isChecked = true; // Check the grandchild
+                                            grandchild.isChecked = !grandchild.isChecked; // Toggle the grandchild's status
                                         });
                                     });
                                 });
