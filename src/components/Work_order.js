@@ -15,6 +15,7 @@ export default function Work_order({ activeTab, onClick }) {
 
             <div id='tab_option_box'>
                 
+               /* These buttons are part of a tab navigation system in the `Work_order` component. */
                 <button
                     className={`tab-button   ${overview === true ?'active_tab_button':''}`}
                     onClick={() => setOverview(true)}
@@ -28,6 +29,8 @@ export default function Work_order({ activeTab, onClick }) {
                     More
                 </button>
             </div>
+          /* This part of the code is conditionally rendering components based on the values of the
+          `overview` and `overlay` states. */
             {overview === true?<New_work_order></New_work_order>:<p>Hello world</p>}
             
             {overlay === true?<Overlay setOverlay={setOverlay}></Overlay>:''}
