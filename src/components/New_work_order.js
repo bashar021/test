@@ -34,6 +34,7 @@ export default function New_work_order() {
             ]
         },
         {
+
             package: 'Package 2',
             rate: 15,
             total: 150,
@@ -68,7 +69,7 @@ export default function New_work_order() {
     useEffect(() => {
  
         setParentsArray(createHierarchy(data));
-        console.log(parentsArray)
+        // console.log(parentsArray)
 
     }, []);
     
@@ -146,7 +147,7 @@ export default function New_work_order() {
                                     type="checkbox"
                                     checked={parentsArray.length > 0 ? parentsArray[index].isChecked : false}
                                     onChange={() => {
-                                        console.log(parentsArray)
+                                        // console.log(parentsArray)
                                         const updatedParentsArray = [...parentsArray];
                                         const parent = updatedParentsArray[index];
                                   
@@ -187,7 +188,7 @@ export default function New_work_order() {
                                             
                                                 child.isChecked = !child.isChecked;
 
-                                             n
+                                             
                                                 child.children.forEach(grandchild => {
                                                     grandchild.isChecked = child.isChecked;
                                                 });
@@ -197,7 +198,7 @@ export default function New_work_order() {
                                                 parent.isChecked = parent.children.every(child => child.isChecked);
 
                                                 setParentsArray(updatedParentsArray)
-                                                console.log(parentsArray[index].isChecked)
+                                                // console.log(parentsArray[index].isChecked)
 
                                             }}
                                         />
