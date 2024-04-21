@@ -67,12 +67,12 @@ export default function New_work_order() {
         });
     };
     useEffect(() => {
- 
+
         setParentsArray(createHierarchy(data));
         // console.log(parentsArray)
 
     }, []);
-    
+
 
 
     const handleChildRowExpand = (parentPackage, childIndex) => {
@@ -114,45 +114,39 @@ export default function New_work_order() {
                     <th>
                         <input
                             type="checkbox"
-                            onChange={() => {
-                                // const updatedParentsArray = [...parentsArray];
-                                // updatedParentsArray.forEach(parent => {
-                                //     parent.isChecked = !parent.isChecked; 
-                                //     parent.children.forEach(child => {
-                                //         child.isChecked = !child.isChecked; 
-                                //         child.children.forEach(grandchild => {
-                                //             grandchild.isChecked = !grandchild.isChecked; 
-                                //         });
-                                //     });
-                                // });
+                            checked={parentsArray.every(parent => parent.isChecked)}
+                            onChange={(event) => {
+                                const updatedParentsArray = [...parentsArray];
+                                updatedParentsArray.forEach(parent => {
+                                    parent.isChecked = event.target.checked; 
+                                    parent.children.forEach(child => {
+                                        child.isChecked = event.target.checked;  
+                                        child.children.forEach(grandchild => {
+                                            grandchild.isChecked = event.target.checked; 
+                                        });
+                                    });
+                                });
+                                // const isAnyParentChecked = parentsArray.some(parent => parent.isChecked);
+                                // const shouldCheck = !isAnyParentChecked; // Determine whether to check or uncheck
+
                                 // const updatedParentsArray = parentsArray.map(parent => {
-                                //     const updatedParent = { ...parent, isChecked: !parent.isChecked };
+                                //     const updatedParent = { ...parent, isChecked: shouldCheck };
                                 //     updatedParent.children = updatedParent.children.map(child => {
-                                //         const updatedChild = { ...child, isChecked: updatedParent.isChecked };
+                                //         const updatedChild = { ...child, isChecked: shouldCheck };
                                 //         updatedChild.children = updatedChild.children.map(grandchild => {
-                                //             return { ...grandchild, isChecked: updatedChild.isChecked };
+                                //             return { ...grandchild, isChecked: shouldCheck };
                                 //         });
                                 //         return updatedChild;
                                 //     });
                                 //     return updatedParent;
                                 // });
-                                const isAnyParentChecked = parentsArray.some(parent => parent.isChecked);
 
-                                const updatedParentsArray = parentsArray.map(parent => {
-                                    const updatedParent = { ...parent, isChecked: !isAnyParentChecked };
-                                    updatedParent.children = updatedParent.children.map(child => {
-                                        const updatedChild = { ...child, isChecked: !isAnyParentChecked };
-                                        updatedChild.children = updatedChild.children.map(grandchild => {
-                                            return { ...grandchild, isChecked: !isAnyParentChecked };
-                                        });
-                                        return updatedChild;
-                                    });
-                                    return updatedParent;
-                                });
-                            
+                                // console.log(this)
+                               
+
                                 setParentsArray(updatedParentsArray)
                             }}
-                            checked={parentsArray.every(parent => parent.isChecked)}
+                            
                         />
                     </th>
                     {/* <th>.</th> */}
@@ -175,10 +169,10 @@ export default function New_work_order() {
                                         // console.log(parentsArray)
                                         const updatedParentsArray = [...parentsArray];
                                         const parent = updatedParentsArray[index];
-                                  
+
                                         parent.isChecked = !parent.isChecked;
 
-                                  
+
                                         parent.children.forEach(child => {
                                             child.isChecked = parent.isChecked;
                                             child.children.forEach(grandchild => {
@@ -194,7 +188,7 @@ export default function New_work_order() {
                             <td>{row.rate}</td>
                             <td>{row.total}</td>
                             {/* <td><button>+</button></td> */}
-                            <td><button className='colapsed_btn' key={index} onClick={(event) => {handleRowExpand(row.package);toggleButton(event)}}>
+                            <td><button className='colapsed_btn' key={index} onClick={(event) => { handleRowExpand(row.package); toggleButton(event) }}>
                                 +
                             </button></td>
 
@@ -210,15 +204,15 @@ export default function New_work_order() {
                                                 const updatedParentsArray = [...parentsArray];
                                                 const child = updatedParentsArray[index].children[childIndex];
 
-                                            
+
                                                 child.isChecked = !child.isChecked;
 
-                                             
+
                                                 child.children.forEach(grandchild => {
                                                     grandchild.isChecked = child.isChecked;
                                                 });
 
-                                           
+
                                                 const parent = updatedParentsArray[index];
                                                 parent.isChecked = parent.children.every(child => child.isChecked);
 
@@ -232,7 +226,7 @@ export default function New_work_order() {
                                     <td>{child.name}</td>
                                     <td>{child.rate}</td>
                                     <td>{child.total}</td>
-                                    <td><button key={index} onClick={(event) => {handleChildRowExpand(row.package, childIndex);toggleArrow(event)}}>▼</button></td>
+                                    <td><button key={index} onClick={(event) => { handleChildRowExpand(row.package, childIndex); toggleArrow(event) }}>▼</button></td>
                                 </tr>
                                 {expandedRows.includes(`${row.package}-${childIndex}`) &&
 
@@ -250,19 +244,19 @@ export default function New_work_order() {
                                                         const updatedChild = { ...updatedParentsArray[index].children[childIndex].children[grandChildIndex] };
                                                         updatedChild.isChecked = !updatedChild.isChecked;
                                                         updatedParentsArray[index].children[childIndex].children[grandChildIndex] = updatedChild;
-                                                    
+
                                                         const parent = updatedParentsArray[index];
                                                         parent.isChecked = parent.children.every(child => child.isChecked);
 
-                                                        
+
                                                         const allGrandchildrenChecked = updatedParentsArray[index].children[childIndex].children.every(child => child.isChecked);
                                                         updatedParentsArray[index].children[childIndex].isChecked = allGrandchildrenChecked;
-                                                    
 
-                                                      
+
+
                                                         const allChildrenChecked = parent.children.every(child => child.isChecked);
                                                         parent.isChecked = allChildrenChecked;
-                                                       
+
                                                         setParentsArray(updatedParentsArray);
 
 
