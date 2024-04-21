@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import '../styles/Work_order.css'
-import Work_order_overview from './Work_order_overview'
 import Overlay from './Overlay'
+import New_work_order from './New_work_order'
 export default function Work_order({ activeTab, onClick }) {
     const [overview,setOverview] = useState(true)
     const [overlay,setOverlay]  = useState(false)
@@ -27,7 +27,7 @@ export default function Work_order({ activeTab, onClick }) {
                     More
                 </button>
             </div>
-            {overview === true?<Work_order_overview></Work_order_overview>:<p>Hello world</p>}
+            {overview === true?<New_work_order></New_work_order>:<p>Hello world</p>}
             
             {overlay === true?<Overlay setOverlay={setOverlay}></Overlay>:''}
 

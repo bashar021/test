@@ -142,14 +142,14 @@ const Table = () => {
         <table>
             <thead id='overview_column_head'>
                 <tr>
-                    {/* <th>
+                    <th>
                         <input
                             type="checkbox"
                             onChange={handleSelectAll}
                             checked={selectedRows.length === data.length && data.length !== 0}
                         />
-                    </th> */}
-                    <th>.</th>
+                    </th>
+                    {/* <th>.</th> */}
                     <th>Package</th>
                     <th>Rate (per sqft)</th>
                     <th>Total</th>

@@ -113,5 +113,7 @@ td:nth-child(2) label {
 .grandchild_row input[type="checkbox"] {
     margin-left: 100px; 
 }
-
+.colapsed_btn{
+    font-size: 30px;
+}
 
