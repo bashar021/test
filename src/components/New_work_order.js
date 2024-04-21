@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
 export default function New_work_order() {
-    const [selectedRows, setSelectedRows] = useState([]);
+    // const [selectedRows, setSelectedRows] = useState([]);
     const [expandedRows, setExpandedRows] = useState([]);
-    const [parent, setParent] = useState([]);
-    const [child, setChild] = useState([]);
-    const [grandChild, setGrandChild] = useState([]);
+    // const [parent, setParent] = useState([]);
+    // const [child, setChild] = useState([]);
+    // const [grandChild, setGrandChild] = useState([]);
     const [parentsArray, setParentsArray] = useState([]);
     const data = [
         {
@@ -102,11 +102,54 @@ export default function New_work_order() {
         button.innerHTML = button.innerHTML === '▼' ? '▲' : '▼';
     };
 
-    const seleAllRows = function () {
+   const handleParent = function(index){
+     // console.log(parentsArray)
+     const updatedParentsArray = [...parentsArray];
+     const parent = updatedParentsArray[index];
+     parent.isChecked = !parent.isChecked;
+     parent.children.forEach(child => {
+         child.isChecked = parent.isChecked;
+         child.children.forEach(grandchild => {
+             grandchild.isChecked = parent.isChecked;
+         });
+     });
+     setParentsArray(updatedParentsArray)
+
+    
+   }
+    const handleChild = function(index,childIndex){
+        const updatedParentsArray = [...parentsArray];
+        const child = updatedParentsArray[index].children[childIndex];
+        child.isChecked = !child.isChecked;
+        child.children.forEach(grandchild => {
+            grandchild.isChecked = child.isChecked;
+        });
+        const parent = updatedParentsArray[index];
+        parent.isChecked = parent.children.every(child => child.isChecked);
+        setParentsArray(updatedParentsArray)
+        // console.log(parentsArray[index].isChecked)
 
     }
+    const handleGrandChild = function(index,childIndex,grandChildIndex){
+        const updatedParentsArray = [...parentsArray];
+
+        const updatedChild = { ...updatedParentsArray[index].children[childIndex].children[grandChildIndex] };
+        updatedChild.isChecked = !updatedChild.isChecked;
+        updatedParentsArray[index].children[childIndex].children[grandChildIndex] = updatedChild;
+
+        const parent = updatedParentsArray[index];
+        parent.isChecked = parent.children.every(child => child.isChecked);
 
 
+        const allGrandchildrenChecked = updatedParentsArray[index].children[childIndex].children.every(child => child.isChecked);
+        updatedParentsArray[index].children[childIndex].isChecked = allGrandchildrenChecked;
+
+        const allChildrenChecked = parent.children.every(child => child.isChecked);
+        parent.isChecked = allChildrenChecked;
+
+        setParentsArray(updatedParentsArray);
+
+    }
     return (
         <table>
             <thead id='overview_column_head'>
@@ -142,8 +185,6 @@ export default function New_work_order() {
                                 // });
 
                                 // console.log(this)
-                               
-
                                 setParentsArray(updatedParentsArray)
                             }}
                             
@@ -165,23 +206,7 @@ export default function New_work_order() {
                                 <input
                                     type="checkbox"
                                     checked={parentsArray.length > 0 ? parentsArray[index].isChecked : false}
-                                    onChange={() => {
-                                        // console.log(parentsArray)
-                                        const updatedParentsArray = [...parentsArray];
-                                        const parent = updatedParentsArray[index];
-
-                                        parent.isChecked = !parent.isChecked;
-
-
-                                        parent.children.forEach(child => {
-                                            child.isChecked = parent.isChecked;
-                                            child.children.forEach(grandchild => {
-                                                grandchild.isChecked = parent.isChecked;
-                                            });
-                                        });
-                                        setParentsArray(updatedParentsArray)
-
-                                    }}
+                                    onChange={() => {handleParent(index)}}
                                 />
                             </td>
                             <td>{row.package}</td>
@@ -200,26 +225,7 @@ export default function New_work_order() {
                                         <input
                                             type="checkbox"
                                             checked={parentsArray[index].children[childIndex].isChecked}
-                                            onChange={() => {
-                                                const updatedParentsArray = [...parentsArray];
-                                                const child = updatedParentsArray[index].children[childIndex];
-
-
-                                                child.isChecked = !child.isChecked;
-
-
-                                                child.children.forEach(grandchild => {
-                                                    grandchild.isChecked = child.isChecked;
-                                                });
-
-
-                                                const parent = updatedParentsArray[index];
-                                                parent.isChecked = parent.children.every(child => child.isChecked);
-
-                                                setParentsArray(updatedParentsArray)
-                                                // console.log(parentsArray[index].isChecked)
-
-                                            }}
+                                            onChange={() => {handleChild(index,childIndex)}}
                                         />
                                     </td>
 
@@ -237,30 +243,7 @@ export default function New_work_order() {
                                                 <input
                                                     type="checkbox"
                                                     checked={parentsArray[index].children[childIndex].children[grandChildIndex].isChecked}
-                                                    onChange={() => {
-                                                        const updatedParentData = [...parentsArray];
-                                                        const updatedParentsArray = [...parentsArray];
-
-                                                        const updatedChild = { ...updatedParentsArray[index].children[childIndex].children[grandChildIndex] };
-                                                        updatedChild.isChecked = !updatedChild.isChecked;
-                                                        updatedParentsArray[index].children[childIndex].children[grandChildIndex] = updatedChild;
-
-                                                        const parent = updatedParentsArray[index];
-                                                        parent.isChecked = parent.children.every(child => child.isChecked);
-
-
-                                                        const allGrandchildrenChecked = updatedParentsArray[index].children[childIndex].children.every(child => child.isChecked);
-                                                        updatedParentsArray[index].children[childIndex].isChecked = allGrandchildrenChecked;
-
-
-
-                                                        const allChildrenChecked = parent.children.every(child => child.isChecked);
-                                                        parent.isChecked = allChildrenChecked;
-
-                                                        setParentsArray(updatedParentsArray);
-
-
-                                                    }}
+                                                    onChange={() => {handleGrandChild(index,childIndex,grandChildIndex)}}
                                                 />
                                             </td>
 
