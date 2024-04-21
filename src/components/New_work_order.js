@@ -115,16 +115,41 @@ export default function New_work_order() {
                         <input
                             type="checkbox"
                             onChange={() => {
-                                const updatedParentsArray = [...parentsArray];
-                                updatedParentsArray.forEach(parent => {
-                                    parent.isChecked = !parent.isChecked; 
-                                    parent.children.forEach(child => {
-                                        child.isChecked = !child.isChecked; 
-                                        child.children.forEach(grandchild => {
-                                            grandchild.isChecked = !grandchild.isChecked; 
+                                // const updatedParentsArray = [...parentsArray];
+                                // updatedParentsArray.forEach(parent => {
+                                //     parent.isChecked = !parent.isChecked; 
+                                //     parent.children.forEach(child => {
+                                //         child.isChecked = !child.isChecked; 
+                                //         child.children.forEach(grandchild => {
+                                //             grandchild.isChecked = !grandchild.isChecked; 
+                                //         });
+                                //     });
+                                // });
+                                // const updatedParentsArray = parentsArray.map(parent => {
+                                //     const updatedParent = { ...parent, isChecked: !parent.isChecked };
+                                //     updatedParent.children = updatedParent.children.map(child => {
+                                //         const updatedChild = { ...child, isChecked: updatedParent.isChecked };
+                                //         updatedChild.children = updatedChild.children.map(grandchild => {
+                                //             return { ...grandchild, isChecked: updatedChild.isChecked };
+                                //         });
+                                //         return updatedChild;
+                                //     });
+                                //     return updatedParent;
+                                // });
+                                const isAnyParentChecked = parentsArray.some(parent => parent.isChecked);
+
+                                const updatedParentsArray = parentsArray.map(parent => {
+                                    const updatedParent = { ...parent, isChecked: !isAnyParentChecked };
+                                    updatedParent.children = updatedParent.children.map(child => {
+                                        const updatedChild = { ...child, isChecked: !isAnyParentChecked };
+                                        updatedChild.children = updatedChild.children.map(grandchild => {
+                                            return { ...grandchild, isChecked: !isAnyParentChecked };
                                         });
+                                        return updatedChild;
                                     });
+                                    return updatedParent;
                                 });
+                            
                                 setParentsArray(updatedParentsArray)
                             }}
                             checked={parentsArray.every(parent => parent.isChecked)}
